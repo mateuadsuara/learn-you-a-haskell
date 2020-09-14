@@ -91,7 +91,7 @@ cycle' (x:xs) l = x : cycle' xs l
 repeat' :: a -> [a]
 repeat' a = a : repeat' a
 
-replicate' :: (Num n, Ord n) => n -> a -> [a]
+replicate' :: Int -> a -> [a]
 replicate' n e
   | n <= 0    = []
   | otherwise = e : replicate' (n-1) e
