@@ -32,7 +32,7 @@ last' (x:xs) = last' xs
 
 init' :: [a] -> [a]
 init' []       = error "empty list"
-init' (x:y:[]) = x : []
+init' (x:[])   = []
 init' (x:xs)   = x : init' xs
 
 length' :: [a] -> Int
