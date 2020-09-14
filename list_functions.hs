@@ -48,14 +48,16 @@ reverse' acc []     = acc
 reverse' acc (x:xs) = reverse' (x : acc) xs
 
 take' :: Int -> [a] -> [a]
-take' 0 _      = []
-take' n []     = []
-take' n (x:xs) = x : take' (n-1) xs
+take' _ []    = []
+take' n l@(x:xs)
+  | n <= 0    = []
+  | otherwise = x : take' (n-1) xs
 
 drop' :: Int -> [a] -> [a]
-drop' _ []     = []
-drop' 0 xs     = xs
-drop' n (x:xs) = drop' (n-1) xs
+drop' _ []    = []
+drop' n l@(x:xs)
+  | n <= 0    = l
+  | otherwise = drop' (n-1) xs
 
 maximum' :: (Ord o) => [o] -> o
 maximum' []     = error "empty list"
