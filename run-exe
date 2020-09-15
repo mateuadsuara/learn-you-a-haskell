@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cabal build && cabal exec learn-you-a-haskell
