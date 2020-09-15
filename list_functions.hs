@@ -43,11 +43,11 @@ null' :: [a] -> Bool
 null' [] = True
 null' _  = False
 
-_reverse' :: [a] -> [a] -> [a]
-_reverse' acc []     = acc
-_reverse' acc (x:xs) = _reverse' (x : acc) xs
 reverse' :: [a] -> [a]
 reverse' = _reverse' []
+  where _reverse' :: [a] -> [a] -> [a]
+        _reverse' acc []     = acc
+        _reverse' acc (x:xs) = _reverse' (x : acc) xs
 
 take' :: Int -> [a] -> [a]
 take' _ []    = []
@@ -85,12 +85,12 @@ elem' :: (Eq e) => e -> [e] -> Bool
 e `elem'` []     = False
 e `elem'` (x:xs) = if e == x then True else e `elem'` xs
 
-_cycle' :: [a] -> [a] -> [a]
-_cycle' _ []     = error "empty list"
-_cycle' [] l     = _cycle' l l
-_cycle' (x:xs) l = x : _cycle' xs l
 cycle' :: [a] -> [a]
 cycle' = _cycle' []
+  where _cycle' :: [a] -> [a] -> [a]
+        _cycle' _ []     = error "empty list"
+        _cycle' [] l     = _cycle' l l
+        _cycle' (x:xs) l = x : _cycle' xs l
 
 repeat' :: a -> [a]
 repeat' a = a : repeat' a
