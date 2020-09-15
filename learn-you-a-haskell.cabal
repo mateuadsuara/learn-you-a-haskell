@@ -99,4 +99,7 @@ test-suite learn-you-a-haskell-test
 
   -- Test dependencies.
   build-depends:       base >=4.13 && <4.14
+                     , learn-you-a-haskell
+                     , hspec
+                     , QuickCheck
 
