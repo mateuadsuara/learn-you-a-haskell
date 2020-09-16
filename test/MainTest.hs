@@ -9,23 +9,23 @@ import Control.Exception (evaluate)
 main :: IO ()
 main = hspec $ do
   describe "head' behaves like head" $ do
-    head' `behavesLike` head
+    head' `errorsOnEmptyAndBehavesLike` head
   describe "tail' behaves like tail" $ do
-    tail' `behavesLike` tail
+    tail' `errorsOnEmptyAndBehavesLike` tail
   describe "last' behaves like last" $ do
-    last' `behavesLike` last
+    last' `errorsOnEmptyAndBehavesLike` last
   describe "init' behaves like init" $ do
-    init' `behavesLike` init
+    init' `errorsOnEmptyAndBehavesLike` init
   describe "maximum' behaves like maximum" $ do
-    maximum' `behavesLike` maximum
+    maximum' `errorsOnEmptyAndBehavesLike` maximum
   describe "minimum' behaves like minimum" $ do
-    minimum' `behavesLike` minimum
+    minimum' `errorsOnEmptyAndBehavesLike` minimum
   describe "cycle' behaves like cycle" $ do
-    (take l . cycle') `behavesLike` (take l . cycle)
+    (take l . cycle') `errorsOnEmptyAndBehavesLike` (take l . cycle)
     where l = 1000
 
-behavesLike reimplemented original = do
-  it "throws an exception if used with an empty list" $ do
+errorsOnEmptyAndBehavesLike reimplemented original = do
+  it "errors if used with an empty list" $ do
     (reimplemented []) `shouldThrowError` "empty list"
     evaluate (original []) `shouldThrow` anyErrorCall
   it "returns the same for non-empty lists" $ do
