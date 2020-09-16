@@ -21,8 +21,18 @@ main = hspec $ do
   describe "minimum' behaves like minimum" $ do
     minimum' `errorsOnEmptyAndBehavesLike` minimum
   describe "cycle' behaves like cycle" $ do
-    (take l . cycle') `errorsOnEmptyAndBehavesLike` (take l . cycle)
-    where l = 1000
+    let l = 1000 in
+      (take l . cycle') `errorsOnEmptyAndBehavesLike` (take l . cycle)
+  describe "length' behaves like length" $ do
+    length' `behavesLike` length
+  describe "null' behaves like null" $ do
+    null' `behavesLike` null
+  describe "reverse' behaves like reverse" $ do
+    reverse' `behavesLike` reverse
+  describe "sum' behaves like sum" $ do
+    sum' `behavesLike` sum
+  describe "product' behaves like product" $ do
+    product' `behavesLike` product
 
 errorsOnEmptyAndBehavesLike reimplemented original = do
   it "errors if used with an empty list" $ do
@@ -31,6 +41,14 @@ errorsOnEmptyAndBehavesLike reimplemented original = do
   it "returns the same for non-empty lists" $ do
     property $ forAll nonEmptyLists $ \xs ->
       (reimplemented xs) == (original xs)
+
+behavesLike reimplemented original = do
+  it "returns the same" $ do
+    property $ forAll lists $ \xs ->
+      (reimplemented xs) == (original xs)
+
+lists :: Gen [Int]
+lists = arbitrary
 
 nonEmptyLists :: Gen [Int]
 nonEmptyLists = (arbitrary `suchThat` (not . null))
