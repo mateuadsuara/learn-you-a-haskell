@@ -8,24 +8,18 @@ import Control.Exception (evaluate)
 
 main :: IO ()
 main = hspec $ do
+  describe "head' behaves like head" $ do
+    head' `behavesLike` head
+  describe "tail' behaves like tail" $ do
+    tail' `behavesLike` tail
 
-  describe "head'" $ do
-    it "throws an exception if used with an empty list like head does" $ do
-      (head [])  `shouldThrowError` "Prelude.head: empty list"
-      (head' []) `shouldThrowError` "empty list"
-
-    it "works as head for non-empty lists" $
-      property $ forAll nonEmptyLists $ \xs ->
-        (head xs) == (head' xs)
-
-  describe "tail'" $ do
-    it "throws an exception if used with an empty list like tail does" $ do
-      (tail [])  `shouldThrowError` "Prelude.tail: empty list"
-      (tail' []) `shouldThrowError` "empty list"
-
-    it "works as head for non-empty lists" $
-      property $ forAll nonEmptyLists $ \xs ->
-        (tail xs) == (tail' xs)
+behavesLike reimplemented original = do
+  it "throws an exception if used with an empty list" $ do
+    (reimplemented []) `shouldThrowError` "empty list"
+    evaluate (original []) `shouldThrow` anyErrorCall
+  it "returns the same for non-empty lists" $ do
+    property $ forAll nonEmptyLists $ \xs ->
+      (reimplemented xs) == (original xs)
 
 nonEmptyLists :: Gen [Int]
 nonEmptyLists = (arbitrary `suchThat` (not . null))
