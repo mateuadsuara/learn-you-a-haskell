@@ -12,6 +12,17 @@ main = hspec $ do
     head' `behavesLike` head
   describe "tail' behaves like tail" $ do
     tail' `behavesLike` tail
+  describe "last' behaves like last" $ do
+    last' `behavesLike` last
+  describe "init' behaves like init" $ do
+    init' `behavesLike` init
+  describe "maximum' behaves like maximum" $ do
+    maximum' `behavesLike` maximum
+  describe "minimum' behaves like minimum" $ do
+    minimum' `behavesLike` minimum
+  describe "cycle' behaves like cycle" $ do
+    (take l . cycle') `behavesLike` (take l . cycle)
+    where l = 1000
 
 behavesLike reimplemented original = do
   it "throws an exception if used with an empty list" $ do
