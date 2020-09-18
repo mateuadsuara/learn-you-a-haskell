@@ -38,7 +38,7 @@ main = hspec $ do
 
 reimplemented `errorsOnEmptyAndBehavesLike` original = do
   it "errors if used with an empty list" $ do
-    (reimplemented []) `shouldThrowError` "empty list"
+    evaluate (reimplemented []) `shouldThrow` errorCall "empty list"
     evaluate (original []) `shouldThrow` anyErrorCall
   it "returns the same for non-empty lists" $
     property $ \(NonEmpty (xs :: [Int])) ->
@@ -48,7 +48,3 @@ reimplemented `behavesLike` original =
   it "returns the same" $
     property $ \(xs :: [Int]) ->
       (reimplemented xs) == (original xs)
-
-shouldThrowError :: a -> String -> IO ()
-shouldThrowError result expectedErrorDescription =
-  evaluate result `shouldThrow` errorCall expectedErrorDescription
