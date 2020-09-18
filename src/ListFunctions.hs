@@ -15,6 +15,7 @@ module ListFunctions
     , elem'
     , cycle'
     , repeat'
+    , replicate'
     ) where
 
 head' :: [a] -> a
