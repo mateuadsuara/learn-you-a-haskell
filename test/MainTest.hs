@@ -10,42 +10,42 @@ import Control.Exception (evaluate)
 
 main :: IO ()
 main = hspec $ do
-  describe "head' behaves like head" $ do
+  describe "head' behaves like head" $
     head' `errorsOnEmptyAndBehavesLike` head
-  describe "tail' behaves like tail" $ do
+  describe "tail' behaves like tail" $
     tail' `errorsOnEmptyAndBehavesLike` tail
-  describe "last' behaves like last" $ do
+  describe "last' behaves like last" $
     last' `errorsOnEmptyAndBehavesLike` last
-  describe "init' behaves like init" $ do
+  describe "init' behaves like init" $
     init' `errorsOnEmptyAndBehavesLike` init
-  describe "maximum' behaves like maximum" $ do
+  describe "maximum' behaves like maximum" $
     maximum' `errorsOnEmptyAndBehavesLike` maximum
-  describe "minimum' behaves like minimum" $ do
+  describe "minimum' behaves like minimum" $
     minimum' `errorsOnEmptyAndBehavesLike` minimum
-  describe "cycle' behaves like cycle" $ do
+  describe "cycle' behaves like cycle" $
     let l = 1000 in
       (take l . cycle') `errorsOnEmptyAndBehavesLike` (take l . cycle)
-  describe "length' behaves like length" $ do
+  describe "length' behaves like length" $
     length' `behavesLike` length
-  describe "null' behaves like null" $ do
+  describe "null' behaves like null" $
     null' `behavesLike` null
-  describe "reverse' behaves like reverse" $ do
+  describe "reverse' behaves like reverse" $
     reverse' `behavesLike` reverse
-  describe "sum' behaves like sum" $ do
+  describe "sum' behaves like sum" $
     sum' `behavesLike` sum
-  describe "product' behaves like product" $ do
+  describe "product' behaves like product" $
     product' `behavesLike` product
 
-errorsOnEmptyAndBehavesLike reimplemented original = do
+reimplemented `errorsOnEmptyAndBehavesLike` original = do
   it "errors if used with an empty list" $ do
     (reimplemented []) `shouldThrowError` "empty list"
     evaluate (original []) `shouldThrow` anyErrorCall
-  it "returns the same for non-empty lists" $ do
+  it "returns the same for non-empty lists" $
     property $ \(NonEmpty (xs :: [Int])) ->
       (reimplemented xs) == (original xs)
 
-behavesLike reimplemented original = do
-  it "returns the same" $ do
+reimplemented `behavesLike` original =
+  it "returns the same" $
     property $ \(xs :: [Int]) ->
       (reimplemented xs) == (original xs)
 
