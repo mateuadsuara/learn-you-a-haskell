@@ -35,6 +35,14 @@ main = hspec $ do
     sum' `behavesLike` sum
   describe "product' behaves like product" $
     product' `behavesLike` product
+  describe "take' behaves like take" $
+    take' `behavesLike2` take
+  describe "drop' behaves like drop" $
+    drop' `behavesLike2` drop
+  describe "elem' behaves like elem" $
+    elem' `behavesLike2` elem
+  describe "replicate' behaves like replicate" $
+    replicate' `behavesLike2` replicate
 
 reimplemented `errorsOnEmptyAndBehavesLike` original = do
   it "errors if used with an empty list" $ do
@@ -48,3 +56,8 @@ reimplemented `behavesLike` original =
   it "returns the same" $
     property $ \(xs :: [Int]) ->
       (reimplemented xs) == (original xs)
+
+reimplemented `behavesLike2` original =
+  it "returns the same" $
+    property $ \(n :: Int) (xs :: [Int]) ->
+      (reimplemented n xs) == (original n xs)
