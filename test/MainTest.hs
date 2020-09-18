@@ -1,3 +1,5 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module Main (main) where
 
 import ListFunctions
@@ -39,19 +41,13 @@ errorsOnEmptyAndBehavesLike reimplemented original = do
     (reimplemented []) `shouldThrowError` "empty list"
     evaluate (original []) `shouldThrow` anyErrorCall
   it "returns the same for non-empty lists" $ do
-    property $ forAll nonEmptyLists $ \xs ->
+    property $ \(NonEmpty (xs :: [Int])) ->
       (reimplemented xs) == (original xs)
 
 behavesLike reimplemented original = do
   it "returns the same" $ do
-    property $ forAll lists $ \xs ->
+    property $ \(xs :: [Int]) ->
       (reimplemented xs) == (original xs)
-
-lists :: Gen [Int]
-lists = arbitrary
-
-nonEmptyLists :: Gen [Int]
-nonEmptyLists = (arbitrary `suchThat` (not . null))
 
 shouldThrowError :: a -> String -> IO ()
 shouldThrowError result expectedErrorDescription =
