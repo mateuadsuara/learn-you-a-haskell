@@ -25,6 +25,9 @@ main = hspec $ do
   describe "cycle' behaves like cycle" $
     let l = 1000 in
       (take l . cycle') `errorsOnEmptyAndBehavesLike` (take l . cycle)
+  describe "repeat' behaves like repeat" $
+    let l = 1000 in
+      (take l . repeat') `behavesLike` (take l . repeat)
   describe "length' behaves like length" $
     length' `behavesLike` length
   describe "null' behaves like null" $
