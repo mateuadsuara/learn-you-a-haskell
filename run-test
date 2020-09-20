@@ -1,3 +1,10 @@
 #!/bin/sh
 
-cabal test --test-show-details=streaming --test-option=--color
+if [ -x "$(command -v stack)" ]; then
+  stack test
+elif [ -x "$(command -v cabal)" ]; then
+  cabal test --test-show-details=streaming --test-option=--color
+else
+  >&2 echo "Neither Stack or Cabal are installed, please install at least one of them"
+  exit 1
+fi
