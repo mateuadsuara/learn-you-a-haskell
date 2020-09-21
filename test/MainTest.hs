@@ -3,6 +3,7 @@
 module Main (main) where
 
 import ListFunctions
+import TupleFunctions
 
 import Test.Hspec
 import Test.QuickCheck
@@ -46,10 +47,14 @@ main = hspec $ do
     elem' `behavesLike2` elem
   describe "replicate' behaves like replicate" $
     replicate' `behavesLike2` replicate
+  describe "+++" $
+    it "returns the same" $
+      property $ \(xs :: [Int]) (ys :: [Int]) ->
+        (xs +++ ys) == (xs ++ ys)
 
 reimplemented `errorsOnEmptyAndBehavesLike` original = do
   it "errors if used with an empty list" $ do
-    evaluate (reimplemented []) `shouldThrow` errorCall "empty list"
+    evaluate (reimplemented []) `shouldThrow` anyErrorCall
     evaluate (original []) `shouldThrow` anyErrorCall
   it "returns the same for non-empty lists" $
     property $ \(NonEmpty (xs :: [Int])) ->
