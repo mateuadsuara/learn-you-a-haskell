@@ -47,15 +47,15 @@ main = hspec $ do
     elem' `behavesLike2` elem
   describe "replicate' behaves like replicate" $
     replicate' `behavesLike2` replicate
-  describe "+++" $
+  describe "+++ behaves like ++" $
     it "returns the same" $
       property $ \(xs :: [Int]) (ys :: [Int]) ->
         (xs +++ ys) == (xs ++ ys)
 
 reimplemented `errorsOnEmptyAndBehavesLike` original = do
   it "errors if used with an empty list" $ do
-    evaluate (reimplemented []) `shouldThrow` anyErrorCall
-    evaluate (original []) `shouldThrow` anyErrorCall
+    errorsOnEmpty reimplemented
+    errorsOnEmpty original
   it "returns the same for non-empty lists" $
     property $ \(NonEmpty (xs :: [Int])) ->
       (reimplemented xs) == (original xs)
@@ -69,3 +69,6 @@ reimplemented `behavesLike2` original =
   it "returns the same" $
     property $ \(n :: Int) (xs :: [Int]) ->
       (reimplemented n xs) == (original n xs)
+
+errorsOnEmpty fn =
+  evaluate (fn []) `shouldThrow` anyErrorCall

@@ -39,8 +39,6 @@ init' (x:xs)   = x : init' xs
 
 length' :: [a] -> Int
 length' = foldr (const (+1)) 0
--- length' []     = 0
--- length' (x:xs) = 1 + length' xs
 
 null' :: [a] -> Bool
 null' [] = True
@@ -66,48 +64,18 @@ drop' n l@(x:xs)
 
 maximum' :: (Ord o) => [o] -> o
 maximum' = foldr1 max
---maximum' []       = error "empty list"
---maximum' (x:[]) = x
---maximum' (x:xs) = if x > max then x else max
---  where max = maximum' xs
 
 minimum' :: (Ord o) => [o] -> o
 minimum' = foldr1 min
---minimum' []     = error "empty list"
---minimum' (x:[]) = x
---minimum' (x:xs) = if x < min then x else min
---  where min = minimum' xs
 
 sum' :: (Num n) => [n] -> n
 sum' = foldr (+) 0
---sum' []     = 0
---sum' (x:xs) = x + sum' xs
-
---ANAMORFISMO
---destruye
---
---CATAMORFISMOS!
---reduce estructuras
---[1, 2, 3]
---
---a = [], b = :
---1:2:3:[]
---
---a = 0, b = +
---1+2+3+0
 
 product' :: (Num n) => [n] -> n
 product' = foldr (*) 1
---product' []     = 1
---product' (x:xs) = x * product' xs
 
 elem' :: (Eq e) => e -> [e] -> Bool
 elem' item = foldr (\el -> (item == el ||)) False
---e `elem'` []     = False
---e `elem'` (x:xs) = if e == x then True else e `elem'` xs
-
-(+++) :: [a] -> [a] -> [a]
-(+++) = flip $ foldr (:)
 
 cycle' :: [a] -> [a]
 cycle' = _cycle' []
@@ -123,3 +91,6 @@ replicate' :: Int -> a -> [a]
 replicate' n e
   | n <= 0    = []
   | otherwise = e : replicate' (n-1) e
+
+(+++) :: [a] -> [a] -> [a]
+(+++) = flip $ foldr (:)
