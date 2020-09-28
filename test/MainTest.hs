@@ -8,6 +8,7 @@ import TupleFunctions
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
+import qualified Data.List (sort)
 
 main :: IO ()
 main = hspec $ do
@@ -51,6 +52,8 @@ main = hspec $ do
     it "returns the same" $
       property $ \(xs :: [Int]) (ys :: [Int]) ->
         (xs +++ ys) == (xs ++ ys)
+  describe "quicksort behaves like sort" $
+    quicksort `behavesLike` Data.List.sort
 
 reimplemented `errorsOnEmptyAndBehavesLike` original = do
   it "errors if used with an empty list" $ do
