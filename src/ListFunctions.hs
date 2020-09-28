@@ -18,6 +18,7 @@ module ListFunctions
     , replicate'
     , (+++)
     , quicksort
+    , zipWith'
     ) where
 
 head' :: [a] -> a
@@ -101,3 +102,8 @@ quicksort [] = []
 quicksort (x:xs) = smaller ++ [x] ++ larger
   where smaller = (quicksort $ filter (<= x) xs)
         larger  = (quicksort $ filter (> x) xs)
+
+zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith' _ [] _ = []
+zipWith' _ _ [] = []
+zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys

@@ -54,6 +54,10 @@ main = hspec $ do
         (xs +++ ys) == (xs ++ ys)
   describe "quicksort behaves like sort" $
     quicksort `behavesLike` Data.List.sort
+  describe "zipWith' behaves like zipWith" $
+    it "returns the same" $
+      property $ \(xs :: [Int]) (ys :: [Int]) ->
+        (zipWith' (+) xs ys) == (zipWith (+) xs ys)
 
 reimplemented `errorsOnEmptyAndBehavesLike` original = do
   it "errors if used with an empty list" $ do
