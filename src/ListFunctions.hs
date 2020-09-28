@@ -21,6 +21,7 @@ module ListFunctions
     , zipWith'
     , map'
     , filter'
+    , takeWhile'
     ) where
 
 head' :: [a] -> a
@@ -116,5 +117,13 @@ map' f (x:xs) = f x : map' f xs
 
 filter' :: (a -> Bool) -> [a] -> [a]
 filter' _ [] = []
-filter' f (x:xs) = if f x then x : rest else rest
+filter' f (x:xs)
+  | f x       = x : rest
+  | otherwise = rest
   where rest = filter' f xs
+
+takeWhile' :: (a -> Bool) -> [a] -> [a]
+takeWhile' _ [] = []
+takeWhile' f (x:xs)
+  | f x       = x : takeWhile' f xs
+  | otherwise = []

@@ -71,6 +71,10 @@ main = hspec $ do
     it "returns the same" $
       property $ \(xs :: [Int]) ->
         (filter' odd xs) == (filter odd xs)
+  describe "takeWhile' behaves like takeWhile" $
+    it "returns the same" $
+      property $ \(xs :: [Int]) ->
+        (takeWhile' (<5) xs) == (takeWhile (<5) xs)
 
 reimplemented `errorsOnEmptyAndBehavesLike` original = do
   it "errors if used with an empty list" $ do
