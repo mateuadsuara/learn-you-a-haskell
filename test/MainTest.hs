@@ -4,6 +4,7 @@ module Main (main) where
 
 import ListFunctions
 import TupleFunctions
+import OtherFunctions
 
 import Test.Hspec
 import Test.QuickCheck
@@ -58,6 +59,10 @@ main = hspec $ do
     it "returns the same" $
       property $ \(xs :: [Int]) (ys :: [Int]) ->
         (zipWith' (+) xs ys) == (zipWith (+) xs ys)
+  describe "flip' behaves like flip" $
+    it "returns the same" $
+      property $ \(Positive (x :: Int)) (y :: Int) ->
+        (flip' div x y) == (flip div x y)
 
 reimplemented `errorsOnEmptyAndBehavesLike` original = do
   it "errors if used with an empty list" $ do
