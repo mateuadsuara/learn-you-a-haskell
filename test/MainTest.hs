@@ -67,6 +67,10 @@ main = hspec $ do
     it "returns the same" $
       property $ \(xs :: [Int]) ->
         (map' (*2) xs) == (map (*2) xs)
+  describe "filter' behaves like filter" $
+    it "returns the same" $
+      property $ \(xs :: [Int]) ->
+        (filter' odd xs) == (filter odd xs)
 
 reimplemented `errorsOnEmptyAndBehavesLike` original = do
   it "errors if used with an empty list" $ do

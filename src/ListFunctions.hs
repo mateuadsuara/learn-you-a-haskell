@@ -20,6 +20,7 @@ module ListFunctions
     , quicksort
     , zipWith'
     , map'
+    , filter'
     ) where
 
 head' :: [a] -> a
@@ -112,3 +113,8 @@ zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys
 map' :: (a -> b) -> [a] -> [b]
 map' _ [] = []
 map' f (x:xs) = f x : map' f xs
+
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = []
+filter' f (x:xs) = if f x then x : rest else rest
+  where rest = filter' f xs
