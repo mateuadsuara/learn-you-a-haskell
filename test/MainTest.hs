@@ -63,6 +63,10 @@ main = hspec $ do
     it "returns the same" $
       property $ \(Positive (x :: Int)) (y :: Int) ->
         (flip' div x y) == (flip div x y)
+  describe "map' behaves like map" $
+    it "returns the same" $
+      property $ \(xs :: [Int]) ->
+        (map' (*2) xs) == (map (*2) xs)
 
 reimplemented `errorsOnEmptyAndBehavesLike` original = do
   it "errors if used with an empty list" $ do
