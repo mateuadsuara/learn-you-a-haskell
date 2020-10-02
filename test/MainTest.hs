@@ -42,23 +42,19 @@ main = hspec $ do
   describe "product' behaves like product" $
     product' `behavesLike` product
   describe "take' behaves like take" $
-    take' `behavesLike2` take
+    take' `behavesLikeB` take
   describe "drop' behaves like drop" $
-    drop' `behavesLike2` drop
+    drop' `behavesLikeB` drop
   describe "elem' behaves like elem" $
-    elem' `behavesLike2` elem
+    elem' `behavesLikeB` elem
   describe "replicate' behaves like replicate" $
-    replicate' `behavesLike2` replicate
+    replicate' `behavesLikeB` replicate
   describe "+++ behaves like ++" $
-    it "returns the same" $
-      property $ \(xs :: [Int]) (ys :: [Int]) ->
-        (xs +++ ys) == (xs ++ ys)
+    (+++) `behavesLike2` (++)
   describe "quicksort behaves like sort" $
     quicksort `behavesLike` Data.List.sort
   describe "zipWith' behaves like zipWith" $
-    it "returns the same" $
-      property $ \(xs :: [Int]) (ys :: [Int]) ->
-        (zipWith' (+) xs ys) == (zipWith (+) xs ys)
+    zipWith' (+) `behavesLike2` zipWith (+)
   describe "flip' behaves like flip" $
     it "returns the same" $
       property $ \(Positive (x :: Int)) (y :: Int) ->
@@ -83,10 +79,15 @@ reimplemented `behavesLike` original =
     property $ \(xs :: [Int]) ->
       (reimplemented xs) == (original xs)
 
-reimplemented `behavesLike2` original =
+reimplemented `behavesLikeB` original =
   it "returns the same" $
     property $ \(n :: Int) (xs :: [Int]) ->
       (reimplemented n xs) == (original n xs)
+
+reimplemented `behavesLike2` original =
+  it "returns the same" $
+    property $ \(xs :: [Int]) (ys :: [Int]) ->
+      (reimplemented xs ys) == (original xs ys)
 
 errorsOnEmpty fn =
   evaluate (fn []) `shouldThrow` anyErrorCall
